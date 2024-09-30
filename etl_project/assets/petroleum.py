@@ -30,8 +30,6 @@ def transform(df: pd.DataFrame, df_petroleum: pd.DataFrame) -> pd.DataFrame:
 def load(
     df_petroleum: pd.DataFrame, postgresql_client: PostgreSqlClient, table, metadata
 ):
-    print(df_petroleum)
-    exit
     postgresql_client.write_to_table(
         data=df_petroleum.to_dict(orient="records"), table=table, metadata=metadata
     )
