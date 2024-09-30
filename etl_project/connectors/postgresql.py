@@ -74,6 +74,7 @@ class PostgreSqlClient:
             pk_column.name for pk_column in table.primary_key.columns.values()
         ]
         metadata.create_all(self.engine)  # creates table if it does not exist
+        print("line 77")
         insert_statement = postgresql.insert(table).values(data)
         upsert_statement = insert_statement.on_conflict_do_update(
             index_elements=key_columns,
@@ -82,3 +83,4 @@ class PostgreSqlClient:
             },
         )
         self.engine.execute(upsert_statement)
+        print("lilne 86")

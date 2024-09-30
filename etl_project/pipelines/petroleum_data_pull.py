@@ -15,15 +15,18 @@ from etl_project.assets.petroleum import (
 )
 
 if __name__ == "__main__":
+    #TODO Create some logging (example can be found at 05-ins-logging)
     load_dotenv()
+    #TODO This will get you started on the logging
+    # pipeline_logging.logger.info("Starting pipeline run")
+    #pipeline_logging.logger.info("Getting pipeline environment variables")    
+
     API_KEY = os.environ.get("API_KEY")
     DB_USERNAME = os.environ.get("DB_USERNAME")
     DB_PASSWORD = os.environ.get("DB_PASSWORD")
     SERVER_NAME = os.environ.get("SERVER_NAME")
     DATABASE_NAME = os.environ.get("DATABASE_NAME")
     PORT = os.environ.get("PORT")
-
-    api_key = os.environ.get("api_key")
     
     params = {
         "frequency": "monthly",
@@ -31,7 +34,7 @@ if __name__ == "__main__":
         "sort[0][column]": "period",
         "offset": "0",
         "length": "5000",
-        "api_key": api_key
+        "api_key": API_KEY
     } 
 
     # Set the URL
@@ -42,6 +45,8 @@ if __name__ == "__main__":
         url=url, params=params
     )
     
+
+    print(response.status_code)
     response_data = response.json()
     df_petroleum = pd.json_normalize(data=response_data)
     df_petroleum =pd.DataFrame(df_petroleum["response.data"][0])
@@ -76,8 +81,10 @@ if __name__ == "__main__":
     extract(
         eai_api_client=EiaApiClient,
     )
+    
+    # TODO Add a Transform here.
 
-
+    
     print("loading data")
     load(
         df_petroleum=df_petroleum,
