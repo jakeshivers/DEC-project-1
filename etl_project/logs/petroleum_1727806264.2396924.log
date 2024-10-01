@@ -1,0 +1,24 @@
+2024-10-01 12:11:04,391 - petroleum - INFO - Starting pipeline run!
+2024-10-01 12:11:04,392 - petroleum - INFO - Getting pipeline environment variables
+2024-10-01 12:11:04,392 - petroleum - INFO - Is this getting written to database?
+2024-10-01 12:11:04,392 - petroleum - INFO - Creating Petroleum API
+2024-10-01 12:11:07,740 - petroleum - INFO - Loading data to postgres database 2024-01, 2024-02 
+2024-10-01 12:11:07,867 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:07,880 - petroleum - INFO - Loading data to postgres database 2024-02, 2024-03 
+2024-10-01 12:11:07,997 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,013 - petroleum - INFO - Loading data to postgres database 2024-03, 2024-04 
+2024-10-01 12:11:08,134 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,145 - petroleum - INFO - Loading data to postgres database 2024-04, 2024-05 
+2024-10-01 12:11:08,242 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,252 - petroleum - INFO - Loading data to postgres database 2024-05, 2024-06 
+2024-10-01 12:11:08,349 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,362 - petroleum - INFO - Loading data to postgres database 2024-06, 2024-07 
+2024-10-01 12:11:08,458 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,470 - petroleum - INFO - Loading data to postgres database 2024-07, 2024-08 
+2024-10-01 12:11:08,638 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,661 - petroleum - INFO - Loading data to postgres database 2024-08, 2024-09 
+2024-10-01 12:11:08,776 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,789 - petroleum - INFO - Loading data to postgres database 2024-09, 2024-10 
+2024-10-01 12:11:08,890 - petroleum - INFO - Pipeline run successful!
+2024-10-01 12:11:08,902 - petroleum - INFO - Loading data to postgres database 2024-10, 2024-11 
+2024-10-01 12:11:09,108 - petroleum - INFO - Pipeline run successful!

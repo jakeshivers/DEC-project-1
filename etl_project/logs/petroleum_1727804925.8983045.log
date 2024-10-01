@@ -1,0 +1,4 @@
+2024-10-01 11:48:46,057 - petroleum - INFO - Starting pipeline run
+2024-10-01 11:48:46,058 - petroleum - INFO - Getting pipeline environment variables
+2024-10-01 11:48:46,059 - petroleum - INFO - Creating Petroleum API
+2024-10-01 11:48:48,257 - petroleum - ERROR - Pipeline failed. See detailed logs: name 'i' is not defined

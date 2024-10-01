@@ -1,0 +1,5 @@
+2024-10-01 12:19:17,630 - petroleum - INFO - Starting pipeline run!
+2024-10-01 12:19:17,630 - petroleum - INFO - Getting pipeline environment variables
+2024-10-01 12:19:17,630 - petroleum - INFO - Is this getting written to database?
+2024-10-01 12:19:17,631 - petroleum - INFO - Creating Petroleum API
+2024-10-01 12:19:19,832 - petroleum - ERROR - Pipeline failed. See detailed logs: name 'response_data' is not defined

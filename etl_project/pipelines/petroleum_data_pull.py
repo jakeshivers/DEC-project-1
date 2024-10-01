@@ -40,12 +40,33 @@ if __name__ == "__main__":
         pipeline_name="petroleum",
         postgresql_client=postgresql_logging_client,
         config="log_folder_path: /etl_project/logs",
-    )
+    )            
+
+    metadata = MetaData()
+    table = Table(
+        "petroleum_prices",
+        metadata,
+        Column("id", Integer, primary_key=True),
+        Column("period", String),
+        Column("duoarea", String),
+        Column("area-name", String),
+        Column("product", String),
+        Column("product-name", String),
+        Column("process", String),
+        Column("process-name", String),
+        Column("series", String),
+        Column("series-description", String),
+        Column("value", Float),
+        Column("units", String),
+    ) 
+
     try:
         #This will get you started on the logging
         metadata_logger.log() #log start
-        pipeline_logging.logger.info("Starting pipeline run")
+
+        pipeline_logging.logger.info("Starting pipeline run!")
         pipeline_logging.logger.info("Getting pipeline environment variables")
+        pipeline_logging.logger.info("Is this getting written to database?")
 
         API_KEY = os.environ.get("API_KEY")
         DB_USERNAME = os.environ.get("DB_USERNAME")
@@ -58,6 +79,7 @@ if __name__ == "__main__":
         params = {
             "frequency": "monthly",
             "start": "2024-01",
+            "end": "2024-02",
             "sort[0][column]": "period",
             "offset": "0",
             "length": "5000",
@@ -66,63 +88,59 @@ if __name__ == "__main__":
 
         # Set the URL                   
         url = f"https://api.eia.gov/v2/petroleum/pri/spt/data/?data[0]=value&sort[0][direction]=desc"
+        
 
-        response = requests.get(
-            url=url, params=params
-        )    
+        month = ['01', '02','03','04','05','06','07', '08','09','10','11','12']
+        i=0
+        while True:
+            response = requests.get(
+                url=url, params=params
+            ) 
+            start = '2024-' + month[i]
+            end = '2024-' + month[i+1]
 
-        #print(response.status_code)
-        response_data = response.json()
-        df_petroleum = pd.json_normalize(data=response_data)
-        df_petroleum =pd.DataFrame(df_petroleum["response.data"][0])
+            params["start"] = start
+            params["end"] = end
 
+            i = i +1
+            if i == 11:
+                break
 
-        #Extract
-        extract(
-            eai_api_client=EiaApiClient,
-        )
+            response_data = response.json()
+            df_petroleum = pd.json_normalize(data=response_data)
+            df_petroleum =pd.DataFrame(df_petroleum["response.data"][0])
 
+            #Extract
+            extract(
+                eai_api_client=EiaApiClient,
+            )
 
-        #Transform
-        # TODO Add a Transform here.
+            #Transform
+            # TODO Add a Transform here.
 
+            
+            #Load
+            metadata_logger.log(status="getting data", logs=f"Loading data for dates between {params['start']} and {params['end']}") #log start
+            pipeline_logging.logger.info(f"Loading data to postgres database {params['start']}, {params['end']} ")
+            postgresql_client = PostgreSqlClient(
+                server_name=SERVER_NAME,
+                database_name=DATABASE_NAME,
+                username=DB_USERNAME,
+                password=DB_PASSWORD,
+                port=PORT,
+            )
 
-        #Load
-        pipeline_logging.logger.info("Loading data to postgres database")
-        postgresql_client = PostgreSqlClient(
-            server_name=SERVER_NAME,
-            database_name=DATABASE_NAME,
-            username=DB_USERNAME,
-            password=DB_PASSWORD,
-            port=PORT,
-        )
-        metadata = MetaData()
-        table = Table(
-            "petroleum_prices",
-            metadata,
-            Column("id", Integer, primary_key=True),
-            Column("period", String),
-            Column("duoarea", String),
-            Column("area-name", String),
-            Column("product", String),
-            Column("product-name", String),
-            Column("process", String),
-            Column("process-name", String),
-            Column("series", String),
-            Column("series-description", String),
-            Column("value", Float),
-            Column("units", String),
-        ) 
-        load(
-            df_petroleum=df_petroleum,
-            postgresql_client=postgresql_client,
-            table=table,
-            metadata=metadata,
-        )
-        pipeline_logging.logger.info("Pipeline run successful")
-        metadata_logger.log(
-            status=MetaDataLoggingStatus.RUN_SUCCESS, logs=pipeline_logging.get_logs()
-        )  # log end
+            load(
+                df_petroleum=df_petroleum,
+                postgresql_client=postgresql_client,
+                table=table,
+                metadata=metadata,
+            )
+            pipeline_logging.logger.info("Pipeline run successful!")
+            metadata_logger.log(
+                status=MetaDataLoggingStatus.RUN_SUCCESS, logs=pipeline_logging.get_logs()
+            )  # log end
+
     except BaseException as e: #log error
         pipeline_logging.logger.error(f"Pipeline failed. See detailed logs: {e}")
         metadata_logger.log(status=MetaDataLoggingStatus.RUN_FAILURE, logs=pipeline_logging.get_logs())
