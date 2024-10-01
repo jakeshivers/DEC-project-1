@@ -1,0 +1,5 @@
+2024-09-30 23:27:07,003 - petroleum - INFO - Starting pipeline run
+2024-09-30 23:27:07,003 - petroleum - INFO - Getting pipeline environment variables
+2024-09-30 23:27:07,004 - petroleum - INFO - Creating Petroleum API
+2024-09-30 23:27:08,019 - petroleum - INFO - Loading data to postgres database
+2024-09-30 23:27:08,139 - petroleum - INFO - Pipeline run successful
