@@ -1,8 +1,9 @@
 # Monthly petroleum based product market prices
 
-## Description, context and goals [add more context here]
+## Description, context and goals.
 
-This project demonstrates the usage of using Python to extract, transform, and load data. We pulled data from [eis.gov](www.eis.gov).
+This project demonstrates the usage of using Python to extract, transform, and load data. The project is hosted in a container on AWS.
+We pulled data from [eis.gov](www.eis.gov). We used the API data to track and compare historical petroleum products over the course of the year.
 
 ## Project Administration
 [Atlasian page](https://dataengineerproject.atlassian.net/wiki/spaces/DPG/overview)<br>
