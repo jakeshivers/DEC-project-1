@@ -14,17 +14,17 @@ This project demonstrates the usage of using Python to extract, transform, and l
 
 ### How to run
 1. Acquire API key from [eis.gov](www.eis.gov)
-2. Add `.env` file to your solution
+2. Add `.env` file to your solution (see below for parameter names)
 3. Optionally build an image and store in Docker Desktop or AWS ECS
 4. If you would like to run locally:
   1. Navigate to DEC-project-1 folder
   2. Open terminal and execute:
-```bash
+```python
 python -m etl_project.pipelines.petroleum_data_pull
 ```
 If run successfully, user will see log events in the terminal and records in your database.   
-This is a code sample:
 
+#### Configuration of `.env` file
 ```env
 API_KEY=<get this from www.eis.gov>
 
