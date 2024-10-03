@@ -71,6 +71,10 @@ Stepheny Agbara<br>
 Kat Janyawadee<br>
 Jake Shivers<br>
 
+# Solution Design Diagram
+![image](https://github.com/user-attachments/assets/1671eb03-907e-4d63-a91a-81d51e2a86d5)
+
+
 # AWS Environment
 ### ECS
 ![ECS](https://github.com/user-attachments/assets/05ed7e1b-a3ba-450d-9b86-295cf46bdb5a)
