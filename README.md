@@ -1,7 +1,7 @@
 # Project Overview
 
 ## Project Context & Goals
-This project was designed to implement an ELT pipeline that extracts monthly petroleum based product market prices from [eis.gov](www.eis.gov), loads the processed data into AWS and transforms it according to specified requirements.
+This project was designed to implement an ELT pipeline that extracts monthly petroleum based product market prices from [eia.gov](www.eia.gov), loads the processed data into AWS and transforms it according to specified requirements.
 
 Our key goals included:
 
