@@ -71,14 +71,19 @@ We used a periodically updated live dataset containing petroleum data from a pub
 ## Load
 Using AWS and Postgres, we were able to load the extracted data into a database.<br>
   * ECS
+    
 ![ECS](https://github.com/user-attachments/assets/05ed7e1b-a3ba-450d-9b86-295cf46bdb5a)<br><br>
   * ECR
+    
 ![ECS Cluster](https://github.com/user-attachments/assets/6d48bce4-b26b-496a-a1ba-a050e885482b)<br><br>
   * Logs
+    
 ![Logs](https://github.com/user-attachments/assets/4c519f3b-3e86-4848-8590-e5adadb6a77e)<br><br>
   * RDS
+    
 ![RDS](https://github.com/user-attachments/assets/df30dc08-3972-4f3e-b5b6-403c47628262)<br><br>
   * S3
+    
 ![image](https://github.com/user-attachments/assets/b0c6488a-c7e2-4be2-befc-2e9dcb6c2654)<br><br>
 
 
