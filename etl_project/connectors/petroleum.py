@@ -9,19 +9,17 @@ class EiaApiClient:
             raise Exception("API key cannot be set to None.")
         self.api_key = api_key
 
-    def get_petroleum_prices(
-        self, start: str, end: str
-    ) -> list[dict]:
+    def get_petroleum_prices(self, start: str, end: str) -> list[dict]:
         """
         Get the data for various petorleum products.
 
         Args:
-            stock_ticker: the ticker for the stock
-            start_time: start time in isoformat
-            end_time: end time in isoformat
+            frequency: monthly
+            start: start month
+            end: end month
 
         Returns:
-            A list of trades for a given stock ticket between the start and end times
+            A list of petorleum price between the start and end month
 
         Raises:
             Exception if response code is not 200.
