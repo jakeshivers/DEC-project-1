@@ -1,9 +1,20 @@
-# Monthly petroleum based product market prices
+# Project Overview
 
-## Description, context and goals.
+## Project Context & Goals
+This project was designed to implement an ELT pipeline that extracts monthly petroleum based product market prices from [eis.gov](www.eis.gov), loads the processed data into AWS and transforms it according to specified requirements.
 
-This project demonstrates the usage of using Python to extract, transform, and load data. The project is hosted in a container on AWS.
-We pulled data from [eis.gov](www.eis.gov). We used the API data to track and compare historical petroleum products over the course of the year.
+Our key goals included:
+
+<li>Extracting data demonstrating ability to handle both live and static datasets<br>
+<li>Perform data transformations according to requirements (showing 7 transformation techniques)<br>
+<li>Deploying the pipeline in a containerized environment on AWS <br>
+<li>Demonstrate collaboration by using GitHub for parallel coding and Jira for progress tracking
+
+
+## Team Members
+<li>Stepheny Agbara<br>
+<li>Kat Janyawadee<br>
+<li>Jake Shivers
 
 ## Project Administration
 [Atlasian page](https://dataengineerproject.atlassian.net/wiki/spaces/DPG/overview)<br>
@@ -11,86 +22,95 @@ We pulled data from [eis.gov](www.eis.gov). We used the API data to track and co
 [Lucid chart](https://lucid.app/lucidchart/4b425887-b190-4d5f-b822-7e885d9269b4/edit?beaconFlowId=D2D9FA805D3E468C&invitationId=inv_f134d3d7-dd4c-4d63-b11c-4ece0c4d502e&page=0_0#)<br>
 [Documentation of completed requirements](https://dataengineerproject.atlassian.net/wiki/spaces/~55705847a003daa7a04d90acfed162590a0dcc/database/2195458?savedViewId=7ff645f9-55ab-4e30-92de-969cd26175d2)<br>
 
-## Getting Started
+## Git for Collaboration
+We used Git for version control, collaborating through:
+<li>Git commits and push<br>
+<li>Creating seperate branches for each work stream <br>
+<li>Opening pull requests for code reviews <br>
 
-### How to run
-1. Acquire API key from [eis.gov](www.eis.gov)
-2. Add `.env` file to your solution (see below for parameter names)
-3. Optionally build an image and store in Docker Desktop or AWS ECS
-4. If you would like to run locally:
-  1. Navigate to DEC-project-1 folder
-  2. Open terminal and execute:
-```python
-python -m etl_project.pipelines.petroleum_data_pull
-```
-If run successfully, user will see log events in the terminal and records in your database.   
+<br>
+<br>
+<br>
 
-#### Configuration of `.env` file
-```env
-API_KEY=<get this from www.eis.gov>
 
-#Database
-SERVER_NAME=<server name> 
-DATABASE_NAME=energy
-DB_USERNAME=<db name>
-DB_PASSWORD=<db pw>
-PORT=<port> #most likely 5432
+# Solution Architecture Diagram
+We have designed our solution following an ETL approach. Below is a simplified view of our architecture:<br><br>
+![image](https://github.com/user-attachments/assets/1671eb03-907e-4d63-a91a-81d51e2a86d5)<br><br>
 
-#Logging to DB
-LOGGING_SERVER_NAME=<server name> 
-LOGGING_DATABASE_NAME=energy
-LOGGING_DB_USERNAME=<db name>
-LOGGING_DB_PASSWORD=<db pw>
-LOGGING_PORT=<port> #most likely 5432
-
-```
+### Components
+* Data Sources: Live API and static CSV.<br>
+* ELT Pipeline:
+  * Extract: Fetched data from both the live API and the static CSV.
+  * Load: Stored processed data in a relational database and S3 bucket
+  * Transform: Applied transformations such as filtering, aggregation, and data type conversions.<br>
+* AWS:<br>
+  * Deployed the pipeline using ECS, ECR, and RDS/S3.
 
 
 ### Dependencies
-
 * All Python dependencies are in the requirements.txt
 * AWS account
 * API key from [eis.gov](www.eis.gov)
 * working databases
   * energy
-  * logging
+  * logging<br>
 
-## Solution Architecture
-* Python
-* Postgres Database
-* AWS:
-  * Docker
+<br>
+<br>
+<br>
+
+
+
+# ELT
+
+## Extract
+
+### Dataset Selected
+We used a periodically updated live dataset containing petroleum data from a public API - [eis.gov](www.eis.gov). We also worked with a static dataset (country.csv) containing country data for transformation purposes. This approach allowed us to demonstrate extraction and transformation techniques.
+
+## Load
+Using AWS and Postgres, we were able to load the extracted data into a database.<br>
+  * ECS
+![ECS](https://github.com/user-attachments/assets/05ed7e1b-a3ba-450d-9b86-295cf46bdb5a)<br><br>
   * ECR
-  * S3: stores the `.env` file
-    
-## Lessons Learned
-Moving from local environment to Docker (local) to AWS containers requires a bit of attention to detail. We struggled hopping from one environment to another until we realized the .env files were not the same in one of the three environments. Additionally, while troubleshooting, we were querying the wrong database. Our app was running, but we kept refreshing an empty (and incorrect) DB! You must pay attention to which environment you're focus is on.
-
-## Authors
-Stepheny Agbara<br>
-Kat Janyawadee<br>
-Jake Shivers<br>
-
-# Solution Design Diagram
-![image](https://github.com/user-attachments/assets/1671eb03-907e-4d63-a91a-81d51e2a86d5)
+![ECS Cluster](https://github.com/user-attachments/assets/6d48bce4-b26b-496a-a1ba-a050e885482b)<br><br>
+  * Logs
+![Logs](https://github.com/user-attachments/assets/4c519f3b-3e86-4848-8590-e5adadb6a77e)<br><br>
+  * RDS
+![RDS](https://github.com/user-attachments/assets/df30dc08-3972-4f3e-b5b6-403c47628262)<br><br>
+  * S3
+![image](https://github.com/user-attachments/assets/b0c6488a-c7e2-4be2-befc-2e9dcb6c2654)<br><br>
 
 
-# AWS Environment
-### ECS
-![ECS](https://github.com/user-attachments/assets/05ed7e1b-a3ba-450d-9b86-295cf46bdb5a)
+## Transform
+We performed the following transformations
+### Transformation 1 -> Renaming
+![Transformation - Renaming Columns](Images/Transformation%20-%20Renaming%20Columns.png)
+### Transformation 2 -> Datatype Casting
+![Transformation - Datatype Change](Images/Transformation%20-%20Datatype%20Change.png)
+### Transformation 3 -> Sorting
+![Transformation - Sorting](Images/Transformation%20-%20Sorting.png)
+### Transformation 4 -> Filtering
+![Transformation - Filtering](Images/Transformation%20-%20Filtering.png)
+### Transformation 5 -> Joins/Merges
+![Transformation - Merge](Images/Transformation%20-%20Merge.png)
+### Transformation 6 & 7 -> Grouping + Aggregation
+Here we performed 2 transformations - grouping and aggregation - together.
+![Transformation - Grouping](Images/Transformation%20-%20Grouping.png)
 
-### ECR
-![ECS Cluster](https://github.com/user-attachments/assets/6d48bce4-b26b-496a-a1ba-a050e885482b)
 
-### Logs
-![Logs](https://github.com/user-attachments/assets/4c519f3b-3e86-4848-8590-e5adadb6a77e)
+<br>
+<br>
+<br>
 
 
-### RDS
-![RDS](https://github.com/user-attachments/assets/df30dc08-3972-4f3e-b5b6-403c47628262)
+# Lessons Learned
+Throughout this project, we gained valuable insights into the challenges and best practices of building an end-to-end data pipeline, most important:
 
-### S3
-![image](https://github.com/user-attachments/assets/b0c6488a-c7e2-4be2-befc-2e9dcb6c2654)
+* The value of attention to detail in data engineering: We had 2 scenarios where we could have saved troubleshooting time by paying keener attention to details
+  * Moving from local environment to Docker (local) to AWS containers requires a bit of attention to detail. We struggled hopping from one environment to another until we realized the .env files were not the same in one of the three environments.
+  * While troubleshooting, we were querying the wrong database. Our app was running, but we kept refreshing an empty (and incorrect) DB!
+
 
 ## Version History
 * 0.1 (Initial Release)
@@ -104,4 +124,3 @@ No need for a license.
 Doug F <br>
 Chris Dilinger <br>
 Jay Ng <br>
-  
